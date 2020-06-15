@@ -255,13 +255,13 @@ class MapPickerState extends State<MapPicker> {
       return Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.only(bottom: 24.0),
             child: Consumer<LocationProvider>(
               builder: (context, locationProvider, _) {
                 return FloatingActionButton.extended(
-                  label: Text('Select location'),
-                  icon:
-                      widget.resultCardConfirmIcon ?? Icon(Icons.arrow_forward),
+                  label:
+                      Text(S.of(context)?.select_location ?? 'Select location'),
+                  icon: widget.resultCardConfirmIcon ?? Icon(Icons.location_on),
                   onPressed: () => Navigator.of(context).pop(
                     {
                       'location': LocationResult(
