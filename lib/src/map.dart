@@ -255,7 +255,7 @@ class MapPickerState extends State<MapPicker> {
       return Align(
         alignment: Alignment.bottomCenter,
         child: Padding(
-            padding: const EdgeInsets.only(bottom: 24.0),
+            padding: const EdgeInsets.only(bottom: 32.0),
             child: Consumer<LocationProvider>(
               builder: (context, locationProvider, _) {
                 return FloatingActionButton.extended(
