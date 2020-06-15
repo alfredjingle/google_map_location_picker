@@ -30,6 +30,7 @@ class S implements WidgetsLocalizations {
   String get please_check_your_connection => "Please check your connection";
   String get please_make_sure_you_enable_gps_and_try_again => "Please make sure you enable GPS and try again";
   String get search_place => "Search place";
+  String get select_location => "Select location";
   String get server_error => "Server error";
 }
 
@@ -143,6 +144,8 @@ class $es extends S {
   String get please_check_your_connection => "Por favor, verifique su conexión";
   @override
   String get please_make_sure_you_enable_gps_and_try_again => "Asegúrese de habilitar el GPS y vuelva a intentarlo";
+  @override
+  String get select_location => "Selecciona la ubicación";
 }
 
 class $tr extends S {

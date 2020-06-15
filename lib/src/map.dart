@@ -28,6 +28,7 @@ class MapPicker extends StatefulWidget {
     this.myLocationButtonEnabled,
     this.layersButtonEnabled,
     this.automaticallyAnimateToCurrentLocation,
+    this.getAddressInfo,
     this.mapStylePath,
     this.appBarColor,
     this.searchBarBoxDecoration,
@@ -47,6 +48,7 @@ class MapPicker extends StatefulWidget {
   final bool myLocationButtonEnabled;
   final bool layersButtonEnabled;
   final bool automaticallyAnimateToCurrentLocation;
+  final bool getAddressInfo;
 
   final String mapStylePath;
 
@@ -181,6 +183,7 @@ class MapPickerState extends State<MapPicker> {
 //            },
             mapType: _currentMapType,
             myLocationEnabled: true,
+            zoomControlsEnabled: false,
           ),
           _MapFabs(
             myLocationButtonEnabled: widget.myLocationButtonEnabled,
@@ -196,58 +199,83 @@ class MapPickerState extends State<MapPicker> {
   }
 
   Widget locationCard() {
-    return Align(
-      alignment: widget.resultCardAlignment ?? Alignment.bottomCenter,
-      child: Padding(
-        padding: widget.resultCardPadding ?? EdgeInsets.all(16.0),
-        child: Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
-          child: Consumer<LocationProvider>(
-              builder: (context, locationProvider, _) {
-            return Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  Flexible(
-                    flex: 20,
-                    child: FutureLoadingBuilder<String>(
-                        future: getAddress(locationProvider.lastIdleLocation),
-                        mutable: true,
-                        loadingIndicator: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            CircularProgressIndicator(),
-                          ],
-                        ),
-                        builder: (context, address) {
-                          _address = address;
-                          return Text(
-                            address ?? 'Unnamed place',
-                            style: TextStyle(fontSize: 18),
-                          );
-                        }),
-                  ),
-                  Spacer(),
-                  FloatingActionButton(
-                    onPressed: () {
-                      Navigator.of(context).pop({
-                        'location': LocationResult(
-                          latLng: locationProvider.lastIdleLocation,
-                          address: _address,
-                        )
-                      });
-                    },
-                    child: widget.resultCardConfirmIcon ??
-                        Icon(Icons.arrow_forward),
-                  ),
-                ],
-              ),
-            );
-          }),
+    if (widget.getAddressInfo) {
+      return Align(
+        alignment: widget.resultCardAlignment ?? Alignment.bottomCenter,
+        child: Padding(
+          padding: widget.resultCardPadding ?? EdgeInsets.all(16.0),
+          child: Card(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+            child: Consumer<LocationProvider>(
+                builder: (context, locationProvider, _) {
+              return Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    Flexible(
+                      flex: 20,
+                      child: FutureLoadingBuilder<String>(
+                          future: getAddress(locationProvider.lastIdleLocation),
+                          mutable: true,
+                          loadingIndicator: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: <Widget>[
+                              CircularProgressIndicator(),
+                            ],
+                          ),
+                          builder: (context, address) {
+                            _address = address;
+                            return Text(
+                              address ?? 'Unnamed place',
+                              style: TextStyle(fontSize: 18),
+                            );
+                          }),
+                    ),
+                    Spacer(),
+                    FloatingActionButton(
+                      onPressed: () {
+                        Navigator.of(context).pop({
+                          'location': LocationResult(
+                            latLng: locationProvider.lastIdleLocation,
+                            address: _address,
+                          )
+                        });
+                      },
+                      child: widget.resultCardConfirmIcon ??
+                          Icon(Icons.arrow_forward),
+                    ),
+                  ],
+                ),
+              );
+            }),
+          ),
         ),
-      ),
-    );
+      );
+    } else {
+      return Align(
+        alignment: Alignment.bottomCenter,
+        child: Padding(
+            padding: const EdgeInsets.only(bottom: 32.0),
+            child: Consumer<LocationProvider>(
+              builder: (context, locationProvider, _) {
+                return FloatingActionButton.extended(
+                  label:
+                      Text(S.of(context)?.select_location ?? 'Select location'),
+                  icon: widget.resultCardConfirmIcon ?? Icon(Icons.location_on),
+                  onPressed: () => Navigator.of(context).pop(
+                    {
+                      'location': LocationResult(
+                          latLng: locationProvider.lastIdleLocation,
+                          address: '')
+                    },
+                  ),
+                );
+              },
+            )),
+      );
+    }
   }
 
   Future<String> getAddress(LatLng location) async {
