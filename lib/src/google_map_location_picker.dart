@@ -26,6 +26,7 @@ class LocationPicker extends StatefulWidget {
     this.myLocationButtonEnabled,
     this.layersButtonEnabled,
     this.automaticallyAnimateToCurrentLocation,
+    this.getAddressInfo,
     this.mapStylePath,
     this.appBarColor,
     this.searchBarBoxDecoration,
@@ -44,6 +45,7 @@ class LocationPicker extends StatefulWidget {
   final bool myLocationButtonEnabled;
   final bool layersButtonEnabled;
   final bool automaticallyAnimateToCurrentLocation;
+  final bool getAddressInfo;
 
   final String mapStylePath;
 
@@ -382,6 +384,7 @@ class LocationPickerState extends State<LocationPicker> {
             layersButtonEnabled: widget.layersButtonEnabled,
             automaticallyAnimateToCurrentLocation:
                 widget.automaticallyAnimateToCurrentLocation,
+            getAddressInfo: widget.getAddressInfo,
             mapStylePath: widget.mapStylePath,
             appBarColor: widget.appBarColor,
             searchBarBoxDecoration: widget.searchBarBoxDecoration,
@@ -416,6 +419,7 @@ Future<LocationResult> showLocationPicker(
   bool myLocationButtonEnabled = false,
   bool layersButtonEnabled = false,
   bool automaticallyAnimateToCurrentLocation = true,
+  bool getAddressInfo = false,
   String mapStylePath,
   Color appBarColor = Colors.transparent,
   BoxDecoration searchBarBoxDecoration,
@@ -436,6 +440,7 @@ Future<LocationResult> showLocationPicker(
           layersButtonEnabled: layersButtonEnabled,
           automaticallyAnimateToCurrentLocation:
               automaticallyAnimateToCurrentLocation,
+          getAddressInfo: getAddressInfo,
           mapStylePath: mapStylePath,
           appBarColor: appBarColor,
           hintText: hintText,
