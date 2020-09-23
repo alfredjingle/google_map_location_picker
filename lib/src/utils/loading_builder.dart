@@ -79,7 +79,7 @@ class _FutureLoadingBuilderState<T> extends State<FutureLoadingBuilder<T>> {
                 return Center(
                   child: Text(
                     S.of(context)?.please_check_your_connection ??
-                        'Please check your connection',
+                        'Por favor, verifique su conexión',
                     overflow: TextOverflow.fade,
                   ),
                 );
@@ -87,7 +87,7 @@ class _FutureLoadingBuilderState<T> extends State<FutureLoadingBuilder<T>> {
                   error.code == 'ERROR_GEOCODING_COORDINATES') {
                 return Text(
                   S.of(context)?.please_check_your_connection ??
-                      'Please check your connection',
+                      'Por favor, verifique su conexión',
                   overflow: TextOverflow.fade,
                 );
               } else {

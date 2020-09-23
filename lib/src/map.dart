@@ -239,7 +239,7 @@ class MapPickerState extends State<MapPicker> {
                           builder: (context, address) {
                             _address = address['address'];
                             return Text(
-                              address ?? 'Unnamed place',
+                              address ?? 'Lugar sin nombre',
                               style: TextStyle(fontSize: 18),
                             );
                           }),
@@ -272,8 +272,8 @@ class MapPickerState extends State<MapPicker> {
             child: Consumer<LocationProvider>(
               builder: (context, locationProvider, _) {
                 return FloatingActionButton.extended(
-                    label: Text(
-                        S.of(context)?.select_location ?? 'Select location'),
+                    label: Text(S.of(context)?.select_location ??
+                        'Selecciona la ubicación'),
                     icon:
                         widget.resultCardConfirmIcon ?? Icon(Icons.location_on),
                     onPressed: () async {
@@ -386,10 +386,10 @@ class MapPickerState extends State<MapPicker> {
           },
           child: AlertDialog(
             title: Text(S.of(context)?.access_to_location_denied ??
-                'Access to location denied'),
+                'Acceso a la ubicación denegado'),
             content: Text(
                 S.of(context)?.allow_access_to_the_location_services ??
-                    'Allow access to the location services.'),
+                    'Permitir acceso a los servicios de ubicación.'),
             actions: <Widget>[
               FlatButton(
                 child: Text(S.of(context)?.ok ?? 'Ok'),
@@ -419,11 +419,11 @@ class MapPickerState extends State<MapPicker> {
           },
           child: AlertDialog(
             title: Text(S.of(context)?.access_to_location_permanently_denied ??
-                'Access to location permanently denied'),
+                'Acceso a la ubicación denegado permanentemente'),
             content: Text(S
                     .of(context)
                     ?.allow_access_to_the_location_services_from_settings ??
-                'Allow access to the location services for this App using the device settings.'),
+                'Permita el acceso a los servicios de ubicación para esta aplicación usando la configuración del dispositivo.'),
             actions: <Widget>[
               FlatButton(
                 child: Text(S.of(context)?.ok ?? 'Ok'),
