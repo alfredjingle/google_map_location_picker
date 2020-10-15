@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:google_map_location_picker/generated/l10n.dart';
 import 'package:google_map_location_picker/src/map.dart';
 import 'package:google_map_location_picker/src/providers/location_provider.dart';
@@ -38,7 +39,8 @@ class LocationPicker extends StatefulWidget {
     this.resultCardDecoration,
     this.resultCardPadding,
     this.countries,
-    this.language = 'en',
+    this.language,
+    this.desiredAccuracy,
   });
 
   final String apiKey;
@@ -64,6 +66,8 @@ class LocationPicker extends StatefulWidget {
   final EdgeInsets resultCardPadding;
 
   final String language;
+
+  final LocationAccuracy desiredAccuracy;
 
   @override
   LocationPickerState createState() => LocationPickerState();
@@ -421,6 +425,7 @@ class LocationPickerState extends State<LocationPicker> {
             resultCardPadding: widget.resultCardPadding,
             key: mapKey,
             language: widget.language,
+            desiredAccuracy: widget.desiredAccuracy,
           ),
         );
       }),
@@ -457,7 +462,8 @@ Future<LocationResult> showLocationPicker(
   AlignmentGeometry resultCardAlignment,
   EdgeInsetsGeometry resultCardPadding,
   Decoration resultCardDecoration,
-  String language,
+  String language = 'en',
+  LocationAccuracy desiredAccuracy = LocationAccuracy.best,
 }) async {
   final results = await Navigator.of(context).push(
     MaterialPageRoute<dynamic>(
@@ -483,6 +489,7 @@ Future<LocationResult> showLocationPicker(
           resultCardDecoration: resultCardDecoration,
           countries: countries,
           language: language,
+          desiredAccuracy: desiredAccuracy,
         );
       },
     ),
