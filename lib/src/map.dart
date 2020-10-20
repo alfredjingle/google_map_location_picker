@@ -289,7 +289,7 @@ class MapPickerState extends State<MapPicker> {
                           barrierDismissible: false);
                       final address =
                           await getAddress(locationProvider.lastIdleLocation);
-                      Navigator.of(context).pop();
+                      Navigator.of(context, rootNavigator: true).pop();
                       Navigator.of(context).pop(
                         {
                           'location': LocationResult(
